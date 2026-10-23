@@ -1,0 +1,13 @@
+# =============================================================================
+# Exam Travel Assist — scheduler cron entry
+# -----------------------------------------------------------------------------
+# Install for the web user (e.g. www-data):
+#   sudo crontab -u www-data -e
+# and add the single line below (adjust the path).
+#
+# This one entry runs every minute and lets Laravel dispatch the daily jobs
+# registered in routes/console.php (stale flagging, retention pruning,
+# account-deletion processing).
+# =============================================================================
+
+* * * * * cd /var/www/exam-travel-assist && php artisan schedule:run >> /dev/null 2>&1
