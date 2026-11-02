@@ -27,7 +27,6 @@ class HomeController extends Controller
                 ->limit(6)
                 ->get(),
             'topFaqs' => Faq::query()->published()->orderBy('sort_order')->limit(4)->get(),
-            'demoDataPresent' => ExamCentre::query()->where('is_demo', true)->exists(),
         ]);
     }
 }

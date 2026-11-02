@@ -506,7 +506,6 @@ footer p { margin-bottom: var(--space-2); }
 .b-stale               { background: var(--slate-100); color: var(--slate-600); }
 .b-unavailable,
 .b-unavailable_live    { background: var(--slate-100); color: var(--slate-600); }
-.b-demo                { background: #7c2d12; color: var(--white); }
 .b-neutral             { background: var(--slate-100); color: var(--slate-600); }
 .b-info                { background: var(--brand-100); color: var(--brand-700); }
 .b-green               { background: var(--green-100); color: var(--green-700); }

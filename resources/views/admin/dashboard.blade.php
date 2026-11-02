@@ -18,18 +18,10 @@
     <div class="stat"><span class="stat-value">{{ number_format($stats['itineraries']) }}</span><span class="stat-label">Saved trips</span></div>
     <div class="stat"><span class="stat-value">{{ number_format($stats['reports']) }}</span><span class="stat-label">Pending reports</span></div>
     <div class="stat"><span class="stat-value">{{ number_format($reportedAnswers) }}</span><span class="stat-label">Reported answers</span></div>
-    <div class="stat"><span class="stat-value">{{ number_format($stats['demo']) }}</span><span class="stat-label">Demo centres</span></div>
     <div class="stat"><span class="stat-value">{{ number_format($stats['stale']) }}</span><span class="stat-label">Stale centres</span></div>
     <div class="stat"><span class="stat-value">{{ number_format($stats['deletion_requests']) }}</span><span class="stat-label">Deletion requests</span></div>
 </div>
 
-@if($stats['demo'] > 0)
-    <div class="alert warn mt-4">
-        <span class="badge b-demo">DEMO DATA</span>
-        {{ $stats['demo'] }} demonstration centres are present. Replace them with a verified import before launch.
-        <a href="{{ route('admin.import') }}">Import centres →</a>
-    </div>
-@endif
 
 <section class="section">
     <h2>Search outcomes (last {{ $searchOutcome['window_days'] }} days)</h2>

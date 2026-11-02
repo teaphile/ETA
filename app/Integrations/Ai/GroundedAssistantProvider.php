@@ -53,9 +53,6 @@ class GroundedAssistantProvider implements AIProvider
         if (! empty($context['centres'])) {
             $rows = array_map(function (array $c) {
                 $flags = [$c['verification_status']];
-                if ($c['is_demo']) {
-                    $flags[] = 'DEMO DATA';
-                }
                 if (! $c['has_coordinates']) {
                     $flags[] = 'no verified coordinates';
                 }
@@ -77,12 +74,11 @@ class GroundedAssistantProvider implements AIProvider
 
         if (! empty($context['services'])) {
             $rows = array_map(fn (array $s) => sprintf(
-                '• %s (%s) — %s%s%s',
+                '• %s (%s) — %s%s',
                 $s['name'],
                 str_replace('_', ' ', $s['category']),
                 $s['city'] ?? 'city not recorded',
                 $s['price_from'] !== null ? ' · listed from ₹'.number_format($s['price_from']) : ' · price not recorded',
-                $s['is_demo'] ? ' · DEMO LISTING' : '',
             ), $context['services']);
 
             $lines[] = "Listings near you (always call to confirm price, vacancy and timings — we never show live availability):\n".implode("\n", $rows);

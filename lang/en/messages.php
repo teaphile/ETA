@@ -60,7 +60,6 @@ return [
         'estimated' => 'Estimated',
         'verified' => 'Verified',
         'unverified' => 'Unverified',
-        'demo' => 'DEMO DATA',
         'source' => 'Source',
         'last_verified' => 'Last verified',
         'not_verified' => 'Not yet checked against an official source.',
@@ -100,7 +99,6 @@ return [
         'step4_title' => 'Ask the assistant',
         'step4_body' => 'Answers built from this site’s data and approved FAQs. If it cannot confirm something, it says so.',
         'how_it_works' => 'How it works',
-        'demo_notice' => 'This installation still has demonstration centres and listings. They are clearly marked, must never be mistaken for official information, and need replacing with verified data before launch.',
         'exams_covered' => 'Exams covered',
         'recent_centres' => 'Recently added centres',
         'no_centres_title' => 'No centres yet',
@@ -247,7 +245,6 @@ return [
         'saved' => 'Place saved.',
         'unsaved' => 'Removed from your saved places.',
         'saved_title' => 'Your saved places',
-        'demo_notice' => 'Demo listings are clearly marked and must be replaced with verified data before launch.',
         'stale' => 'This listing has not been checked recently — call ahead before you rely on it.',
     ],
 

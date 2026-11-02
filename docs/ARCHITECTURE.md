@@ -42,7 +42,7 @@ the UI, the assistant and the admin screens:
 `stale` · `unavailable`.
 
 - Centres/places carry `verification_status` + `source_name` + `source_url` +
-  `last_verified_at` + `is_demo`, and render a badge accordingly.
+  `last_verified_at`, and render a badge accordingly.
 - Travel options carry `price_status` and, when estimated, an `estimateMethod` string that is
   shown beside the price. Flight pricing is `unavailable` by design.
 - `data:flag-stale` marks verified records past their freshness window as `stale`.

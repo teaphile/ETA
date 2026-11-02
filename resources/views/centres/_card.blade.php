@@ -19,11 +19,6 @@
         @if($centre->pin_code) — {{ $centre->pin_code }}@endif
     </p>
 
-    @if($centre->is_demo)
-        <span class="badge b-demo">{{ __('messages.common.demo') }}</span>
-        <span class="small muted">Demonstration record — not a real examination centre.</span>
-    @endif
-
     @if(! $centre->hasCoordinates())
         <p class="small muted mt-2">{{ __('messages.centres.coordinates_missing') }}</p>
     @endif

@@ -33,8 +33,6 @@ $ DB_DATABASE=/tmp/…/t2.sqlite php artisan migrate:fresh --seed --force
   2026_01_01_000001_create_exam_travel_tables ............. DONE
   2026_10_18_000001_add_provenance_and_health_tables ...... DONE
   ReferenceDataSeeder ..................................... DONE
-  DemoDataSeeder .......................................... DONE
-Seeded 9 demo centres (all flagged is_demo) and their demo listings.
 ```
 
 27 tables are created; `php artisan about` reports the expected drivers, and `php artisan
@@ -71,7 +69,6 @@ route:list` reports 77 routes.
 
 **Feature — centre search & data honesty**
 - centre search filters and empty state
-- demo data is labelled
 - centre without coordinates says so
 
 **Feature — auth & accounts**
@@ -110,14 +107,13 @@ route:list` reports 77 routes.
 - unknown route returns 404
 - security headers present on html response
 - content security policy uses a per request nonce
-- demo purge removes only demo rows
 
 ## What the tests actually prove
 
 - **Authorisation is enforced server-side.** A student is refused `/admin`; a moderator is
   refused admin-only sub-areas; a locked thread rejects replies.
 - **Data honesty holds at the edges.** Flight prices render as *unavailable*; train/bus
-  prices render as *estimated* with the IRCTC link; demo rows carry the DEMO DATA badge; a
+  prices render as *estimated* with the IRCTC link; a
   centre without coordinates explains why no map is shown.
 - **The assistant does not invent facts.** It reports `provider=grounded_db`, never claims
   seat availability, and sets `limitation=live_provider_data_required` when asked for live
@@ -130,8 +126,6 @@ route:list` reports 77 routes.
   present on HTML responses, and the CSP that accompanies them gates scripts behind a
   per-request nonce — the rendered inline script carries the same nonce, and there is no
   `'unsafe-inline'` for scripts.
-- **Demo data can be removed cleanly.** `data:purge-demo` deletes only rows flagged `is_demo`
-  (plus the known demo accounts) and leaves real, imported centres untouched.
 
 ## Not covered (honest gaps)
 

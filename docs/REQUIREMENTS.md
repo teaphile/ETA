@@ -19,7 +19,7 @@ Maps each business requirement to its implementation and the evidence that it wo
 
 | Requirement | How it is met |
 |---|---|
-| Data honesty | `DataStatus` vocabulary; provenance columns; estimates labelled; demo badged (`IMPLEMENTATION_STATUS.md`) |
+| Data honesty | `DataStatus` vocabulary; provenance columns; estimates labelled (`IMPLEMENTATION_STATUS.md`) |
 | No fabricated data | Flights priced *unavailable*; ride-hailing *unavailable*; centres only via verified import; assistant grounded |
 | Security | Role middleware, ownership checks, rate limiting, CSRF, security headers, audit log (`SECURITY_AND_PRIVACY.md`) |
 | Privacy | Minimal PII, identifier-free analytics, retention windows, self-service deletion |

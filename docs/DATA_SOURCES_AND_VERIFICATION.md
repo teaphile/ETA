@@ -65,12 +65,11 @@ a safety certification. Prices shown are "listed from" values from the source, o
 - It never invents centres, fares, timings, availability or "official" instructions; questions
   requiring live provider data return a stated limitation.
 
-## Demonstration data
+## Seeded data
 
-- `DemoDataSeeder` creates obviously-fake centres, listings and demo accounts, every one
-  flagged `is_demo` and rendered with a **DEMO DATA** badge.
-- The seeder **refuses to run in production** unless `ALLOW_DEMO_SEED=true` is explicitly set.
-- `ReferenceDataSeeder` (real examination names, general FAQs) is safe in any environment.
+- `ReferenceDataSeeder` (real examination names, general FAQs) is the only seeder and is
+  safe in any environment. There is no demo data anywhere in the codebase.
+- Real centre and listing data enters only through the admin-verified CSV import.
 
 ## Availability dates / sessions
 

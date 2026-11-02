@@ -20,7 +20,6 @@
         </div>
         <div class="stack-sm">
             <span class="badge b-{{ $centre->data_status }}">{{ $centre->statusLabel() }}</span>
-            @if($centre->is_demo)<span class="badge b-demo">{{ __('messages.common.demo') }}</span>@endif
         </div>
     </div>
 </div>

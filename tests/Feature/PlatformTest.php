@@ -13,6 +13,7 @@ use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\URL;
 use Tests\TestCase;
 
@@ -24,6 +25,59 @@ class PlatformTest extends TestCase
     {
         parent::setUp();
         $this->seed(DatabaseSeeder::class);
+        $this->seedTestFixtures();
+    }
+
+    /**
+     * Real (non-demo) fixture rows the feature tests rely on: three role accounts,
+     * a handful of centres and one curated listing.
+     */
+    private function seedTestFixtures(): void
+    {
+        User::factory()->admin()->create([
+            'name' => 'Test Admin', 'email' => 'admin@example.com', 'password' => Hash::make('password'),
+        ]);
+        User::factory()->moderator()->create([
+            'name' => 'Test Moderator', 'email' => 'moderator@example.com', 'password' => Hash::make('password'),
+        ]);
+        User::factory()->create([
+            'name' => 'Test Student', 'email' => 'student@example.com', 'password' => Hash::make('password'),
+            'current_city' => 'Patna', 'state' => 'Bihar',
+        ]);
+
+        $exam = Examination::firstOrFail();
+
+        ExamCentre::create([
+            'examination_id' => $exam->id, 'centre_code' => 'DEL-101',
+            'name' => 'Test Institute of Technology', 'address' => 'Education Hub Road, Dwarka',
+            'city' => 'Delhi', 'state' => 'Delhi', 'pin_code' => '110078',
+            'latitude' => 28.5921, 'longitude' => 77.0460,
+            'verification_status' => 'admin_verified', 'data_status' => 'admin_verified',
+            'status' => 'active',
+        ]);
+        ExamCentre::create([
+            'examination_id' => $exam->id, 'centre_code' => 'DEL-201',
+            'name' => 'Test Public School, Rohini', 'address' => 'Sector 7, Rohini',
+            'city' => 'Delhi', 'state' => 'Delhi', 'pin_code' => '110085',
+            'latitude' => 28.7495, 'longitude' => 77.0565,
+            'verification_status' => 'unverified', 'data_status' => 'unverified',
+            'status' => 'active',
+        ]);
+        // Intentionally has no coordinates, to exercise the "we do not guess locations" path.
+        ExamCentre::create([
+            'examination_id' => $exam->id, 'centre_code' => 'LKO-101',
+            'name' => 'Test Degree College', 'address' => 'University Road',
+            'city' => 'Lucknow', 'state' => 'Uttar Pradesh', 'pin_code' => '226007',
+            'verification_status' => 'unverified', 'data_status' => 'unverified',
+            'status' => 'active',
+        ]);
+
+        LocalService::create([
+            'name' => 'Test Budget Stay Delhi', 'category' => 'hotel', 'city' => 'Delhi',
+            'address' => 'Near the main railway station', 'latitude' => 28.6, 'longitude' => 77.05,
+            'price_from' => 899, 'source' => 'curated', 'source_name' => 'Test fixture',
+            'data_status' => 'admin_verified', 'status' => 'active',
+        ]);
     }
 
     private function admin(): User
@@ -47,17 +101,12 @@ class PlatformTest extends TestCase
     {
         $this->get('/centres?city=Delhi')->assertOk()->assertSee('2 centre(s) found');
         $this->get('/centres?city=NowhereCity')->assertOk()->assertSee('No centres match');
-        $this->get('/centres?code=DEMO-LKO-101')->assertOk()->assertSee('Lucknow');
-    }
-
-    public function test_demo_data_is_labelled(): void
-    {
-        $this->get('/centres')->assertSee('DEMO DATA');
+        $this->get('/centres?code=LKO-101')->assertOk()->assertSee('Lucknow');
     }
 
     public function test_centre_without_coordinates_says_so(): void
     {
-        $centre = ExamCentre::where('centre_code', 'DEMO-NOC-101')->firstOrFail();
+        $centre = ExamCentre::where('centre_code', 'LKO-101')->firstOrFail();
         $this->get(route('centres.show', $centre))->assertOk()->assertSee('coordinates');
     }
 
@@ -402,37 +451,4 @@ class PlatformTest extends TestCase
         $response->assertSee('nonce="'.$matches[1].'"', false);
     }
 
-    public function test_demo_purge_removes_only_demo_rows(): void
-    {
-        $exam = Examination::query()->firstOrFail();
-
-        $demo = ExamCentre::create([
-            'examination_id' => $exam->id,
-            'centre_code' => 'DEMO-TEST-999',
-            'name' => 'Temporary demo centre',
-            'address' => 'Test Road',
-            'city' => 'Delhi',
-            'state' => 'Delhi',
-            'data_status' => 'unverified',
-            'is_demo' => true,
-            'status' => 'active',
-        ]);
-
-        $real = ExamCentre::create([
-            'examination_id' => $exam->id,
-            'centre_code' => 'REAL-TEST-001',
-            'name' => 'Genuine centre that must be kept',
-            'address' => 'Genuine Road',
-            'city' => 'Delhi',
-            'state' => 'Delhi',
-            'data_status' => 'officially_verified',
-            'is_demo' => false,
-            'status' => 'active',
-        ]);
-
-        $this->artisan('data:purge-demo', ['--force' => true])->assertSuccessful();
-
-        $this->assertDatabaseMissing('exam_centres', ['id' => $demo->id]);
-        $this->assertDatabaseHas('exam_centres', ['id' => $real->id]);
-    }
 }

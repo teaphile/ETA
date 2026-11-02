@@ -11,8 +11,8 @@ grounded assistant, and learn from a moderated student community.
 The guiding rule of this codebase is **data honesty**: it never invents centres, fares,
 timetables, hotel prices, vacancies, live ride-hailing availability, or "verified" status.
 Anything that is a calculation is labelled *estimated*; anything unknown is labelled
-*unavailable*; anything not yet checked is labelled *unverified*; demonstration rows are
-stamped **DEMO DATA**. See [`docs/DATA_SOURCES_AND_VERIFICATION.md`](docs/DATA_SOURCES_AND_VERIFICATION.md).
+*unavailable*; anything not yet checked is labelled *unverified*.
+See [`docs/DATA_SOURCES_AND_VERIFICATION.md`](docs/DATA_SOURCES_AND_VERIFICATION.md).
 
 ---
 
@@ -40,14 +40,11 @@ layout** and is not needed to run the app — see
 composer install
 cp .env.example .env
 php artisan key:generate
-php artisan migrate --seed      # creates reference data + clearly-badged DEMO data
+php artisan migrate --seed      # creates reference data (exams, FAQs) only
 php artisan serve               # http://127.0.0.1:8000
-php artisan test                # 48 tests
+php artisan app:create-admin you@example.com   # first administrator
+php artisan test                # test suite
 ```
-
-Demo logins (local/non-production only): `admin@example.com`, `moderator@example.com`,
-`student@example.com` — password `password`. **There is no admin seeder for production**;
-create the first administrator with `php artisan app:create-admin you@example.com`.
 
 ---
 
@@ -119,7 +116,7 @@ See [`docs/API_SETUP.md`](docs/API_SETUP.md) and
 
 1. Set the MySQL 8 `DB_*` values, `APP_ENV=production`, `APP_DEBUG=false`, a real `APP_URL`,
    and **HTTPS only**.
-2. `php artisan migrate --force` — **do not seed demo data**. Create the first admin with
+2. `php artisan migrate --force` — seeds only safe reference data. Create the first admin with
    `php artisan app:create-admin`.
 3. Import only lawfully-obtained, verified centre lists via **Admin → CSV Import**, and mark
    them verified only when you hold a source URL.

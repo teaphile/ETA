@@ -81,7 +81,7 @@ account-deletion grace is 30 days. See `DATABASE_SCHEMA.md`.
 - [ ] Serve over HTTPS only; set `APP_DEBUG=false`, `APP_ENV=production`, real `APP_URL`.
 - [ ] Configure MySQL 8 and back up nightly; test a restore.
 - [ ] Configure `MAIL_*`, then decide on `REQUIRE_EMAIL_VERIFICATION`.
-- [ ] Remove demo accounts and demo data (`php artisan data:purge-demo`); import only lawfully-obtained verified centre data.
+- [ ] No demo or shared-password accounts exist; import only lawfully-obtained verified centre data.
 - [ ] Rotate all keys; keep the Google keys restricted and quotas/budget alerts on.
 - [ ] Run `composer audit`; keep dependencies patched.
 - [ ] Legal review for DPDP Act 2023 and publish the privacy/terms pages with counsel's copy.

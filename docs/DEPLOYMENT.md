@@ -14,13 +14,10 @@
 composer install
 cp .env.example .env
 php artisan key:generate
-php artisan migrate --seed          # reference data + badged DEMO data
+php artisan migrate --seed          # reference data only (exams, FAQs)
 php artisan serve                   # http://127.0.0.1:8000
 php artisan test
 ```
-
-Demo logins (non-production): `admin@example.com`, `moderator@example.com`,
-`student@example.com` / `password`.
 
 ## Docker (development convenience)
 
@@ -66,7 +63,7 @@ php artisan migrate --seed
 3. **Install dependencies and build caches.**
    ```bash
    composer install --no-dev --optimize-autoloader
-   php artisan migrate --force          # do NOT seed demo data
+   php artisan migrate --force          # reference data only; no demo data exists
    php artisan config:cache
    php artisan route:cache
    php artisan view:cache
@@ -107,7 +104,6 @@ php artisan migrate --seed
 
 ## Post-deploy checklist
 
-- [ ] Demo data and demo accounts removed.
 - [ ] Only lawfully-obtained, verified centre data imported; sources recorded.
 - [ ] Integration keys set and restricted (or left empty for keyless operation).
 - [ ] `REQUIRE_EMAIL_VERIFICATION` decided and mail delivery confirmed.

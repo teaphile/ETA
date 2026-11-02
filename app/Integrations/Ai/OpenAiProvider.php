@@ -99,15 +99,13 @@ class OpenAiProvider implements AIProvider
     private function systemPrompt(array $context): string
     {
         $centreLines = collect($context['centres'] ?? [])->map(fn ($c) => sprintf(
-            '- %s | code %s | %s, %s | verification: %s%s',
-            $c['name'], $c['centre_code'], $c['city'], $c['state'], $c['verification_status'],
-            $c['is_demo'] ? ' | DEMO DATA (not real)' : ''
+            '- %s | code %s | %s, %s | verification: %s',
+            $c['name'], $c['centre_code'], $c['city'], $c['state'], $c['verification_status']
         ))->implode("\n");
 
         $serviceLines = collect($context['services'] ?? [])->map(fn ($s) => sprintf(
-            '- %s | %s | %s%s',
+            '- %s | %s | %s',
             $s['name'], $s['category'], $s['city'] ?? '',
-            $s['is_demo'] ? ' | DEMO LISTING (not real)' : ''
         ))->implode("\n");
 
         $faqLines = collect($context['faqs'] ?? [])->map(fn ($f) => "- Q: {$f['question']}\n  A: {$f['answer']}")->implode("\n");

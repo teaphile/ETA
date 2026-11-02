@@ -150,7 +150,7 @@
             <tbody>
                 @forelse($centres as $centre)
                     <tr>
-                        <td class="mono tiny">{{ $centre->centre_code }}@if($centre->is_demo)<br><span class="badge b-demo">demo</span>@endif</td>
+                        <td class="mono tiny">{{ $centre->centre_code }}</td>
                         <td>{{ $centre->name }}</td>
                         <td class="small">{{ $centre->city }}, {{ $centre->state }}</td>
                         <td class="small">{{ $centre->examination?->name ?? '—' }}@if($centre->session)<br><span class="tiny muted">{{ $centre->session->name }}</span>@endif</td>

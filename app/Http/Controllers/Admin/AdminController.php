@@ -57,7 +57,6 @@ class AdminController extends Controller
                 'posts' => CommunityPost::count(),
                 'reports' => ContentReport::where('status', 'pending')->count(),
                 'itineraries' => DB::table('itineraries')->count(),
-                'demo' => ExamCentre::where('is_demo', true)->count(),
                 'stale' => $staleCentres,
                 'deletion_requests' => User::whereNotNull('deletion_requested_at')->count(),
             ],
@@ -152,7 +151,6 @@ class AdminController extends Controller
         $data = $request->validated();
         $data['data_status'] = $data['verification_status'];
         $data['created_by'] = $request->user()->id;
-        $data['is_demo'] = false;
 
         if (DataStatus::isVerified($data['verification_status'])) {
             $data['last_verified_at'] = now();
@@ -244,7 +242,7 @@ class AdminController extends Controller
         );
 
         $example = [
-            'DEMO-001', 'Example College', 'Main Road', 'Delhi', 'Delhi',
+            'EX-001', 'Example College', 'Main Road', 'Delhi', 'Delhi',
             '110001', '28.61', '77.21', 'JEE Main', '', 'Session 2026', '',
             'Admit-card sample (replace with your verified source)', '', 'active',
         ];
@@ -489,7 +487,6 @@ class AdminController extends Controller
         $data['last_verified_at'] = in_array($data['data_status'], [
             DataStatus::OfficiallyVerified->value, DataStatus::AdminVerified->value,
         ], true) ? now() : null;
-        $data['is_demo'] = false;
 
         $place = LocalService::create($data);
         AuditLog::record('place_created', LocalService::class, $place->id, $place->name.' ('.$place->source_name.')');

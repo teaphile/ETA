@@ -126,7 +126,7 @@ return new class extends Migration
         // record is left in an ambiguous state.
         DB::table('exam_centres')->update(['data_status' => DB::raw('verification_status')]);
         DB::table('local_services')->update([
-            'data_status' => DB::raw("CASE WHEN is_demo = 1 THEN 'unverified' ELSE 'admin_verified' END"),
+            'data_status' => 'admin_verified',
             'source_name' => DB::raw('source'),
         ]);
     }

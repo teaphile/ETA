@@ -55,7 +55,6 @@ return new class extends Migration
             $t->string('source_name')->nullable();
             $t->string('source_url')->nullable();
             $t->timestamp('last_verified_at')->nullable();
-            $t->boolean('is_demo')->default(false);
             $t->string('status')->default('active')->index();
             $t->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $t->timestamps();
@@ -118,7 +117,6 @@ return new class extends Migration
             $t->integer('reviews_count')->nullable();
             $t->decimal('price_from', 10, 2)->nullable();
             $t->string('source')->default('curated');
-            $t->boolean('is_demo')->default(false);
             $t->timestamp('last_verified_at')->nullable();
             $t->string('status')->default('active');
             $t->timestamps();

@@ -17,13 +17,6 @@
     <p class="hero-note">{{ __('messages.app.independent') }} · {{ __('messages.footer.verify') }}</p>
 </section>
 
-@if($demoDataPresent)
-    <div class="alert warn">
-        <p><span class="badge b-demo">{{ __('messages.common.demo') }}</span></p>
-        <p class="mb-0">{{ __('messages.home.demo_notice') }}</p>
-    </div>
-@endif
-
 <section class="section">
     <h2>{{ __('messages.home.how_it_works') }}</h2>
     <div class="steps">

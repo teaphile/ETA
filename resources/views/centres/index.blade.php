@@ -42,7 +42,7 @@
     <div class="row mt-3">
         <div>
             <label for="f-code">{{ __('messages.centres.centre_code') }}</label>
-            <input id="f-code" name="code" type="text" value="{{ $filters['code'] }}" placeholder="e.g. DEMO-DEL-101">
+            <input id="f-code" name="code" type="text" value="{{ $filters['code'] }}" placeholder="e.g. JEE-DEL-101">
         </div>
         <div>
             <label for="f-q">{{ __('messages.centres.keyword') }}</label>

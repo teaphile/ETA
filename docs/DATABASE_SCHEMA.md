@@ -14,11 +14,11 @@ production). Creating a fresh database yields 27 tables, of which 20 are applica
 | `users` | Accounts. Added columns: `role`, `phone`, `current_city`, `state`, `preferred_language`, `account_status`, `deletion_requested_at` (plus Laravel's `last_login_at`/`terms_accepted_at`) |
 | `examinations` | Examination catalogue (name, slug, conducting authority, official URL, status) |
 | `exam_sessions` | Sessions/years for an examination |
-| `exam_centres` | Centres. FK to examination/session; indexed `centre_code`, `name`, `city`, `state`, `status`; provenance: `verification_status`, `source_name`, `source_url`, `last_verified_at`, `is_demo`, `latitude`/`longitude` (nullable) |
+| `exam_centres` | Centres. FK to examination/session; indexed `centre_code`, `name`, `city`, `state`, `status`; provenance: `verification_status`, `source_name`, `source_url`, `last_verified_at`, `latitude`/`longitude` (nullable) |
 | `import_batches` | A CSV upload: status (`awaiting_approval`/`imported`/`rejected`), row counts, uploader |
 | `import_rows` | Per-row parse/validation result and error message |
 | `itineraries` | A saved journey plan (owner, origin/destination, `options_snapshot` JSON) |
-| `local_services` | Curated nearby listings (FK to centre; category; source + `last_verified_at`; `is_demo`) |
+| `local_services` | Curated nearby listings (FK to centre; category; source + `last_verified_at`) |
 | `saved_places` | Unique (user, local_service) pairs |
 | `faqs` | Help/FAQ content, ordered, optionally published |
 | `community_posts` | Threads (author, title, body, category, status, `is_locked`) |
@@ -52,7 +52,6 @@ User        1─n SavedPlace n─1 LocalService
 - Freshness windows come from `config/exam_travel.php` (`CENTRE_FRESHNESS_MONTHS`,
   `SERVICE_FRESHNESS_MONTHS`, default 6). `data:flag-stale` marks records past the window
   as `stale`. Missing verification is never treated as fresh.
-- `is_demo` marks demonstration rows; the UI always badges them.
 
 ## Retention
 

@@ -33,7 +33,6 @@ final readonly class PlaceResult
         public string $dataStatus = DataStatus::Unverified->value,
         public ?string $retrievedAt = null,
         public ?string $lastVerifiedAt = null,
-        public bool $isDemo = false,
         public ?string $navigationUrl = null,
         public ?string $errorOrLimitation = null,
         // Present only for curated listings stored in `local_services`, so the UI can
@@ -90,7 +89,6 @@ final readonly class PlaceResult
             dataStatus: (string) ($m->data_status ?: DataStatus::Unverified->value),
             retrievedAt: $m->retrieved_at?->toIso8601String(),
             lastVerifiedAt: $m->last_verified_at?->toIso8601String(),
-            isDemo: (bool) $m->is_demo,
             errorOrLimitation: $m->error_or_limitation,
             localServiceId: (int) $m->id,
         );
