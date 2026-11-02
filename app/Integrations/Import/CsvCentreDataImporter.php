@@ -356,7 +356,6 @@ class CsvCentreDataImporter implements CentreDataImporter
 
         if (! $updating) {
             $payload['created_by'] = $actorId;
-            $payload['is_demo'] = false;
         }
 
         if (DataStatus::isVerified($status)) {

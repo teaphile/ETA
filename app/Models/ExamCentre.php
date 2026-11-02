@@ -17,7 +17,7 @@ class ExamCentre extends Model
         'verification_status', 'data_status', 'source_name', 'source_url',
         'source_type', 'provider_reference', 'error_or_limitation',
         'last_verified_at', 'valid_from', 'valid_until', 'retrieved_at',
-        'is_demo', 'status', 'created_by', 'import_batch_id',
+        'status', 'created_by', 'import_batch_id',
     ];
 
     protected function casts(): array
@@ -27,7 +27,6 @@ class ExamCentre extends Model
             'retrieved_at' => 'datetime',
             'valid_from' => 'date',
             'valid_until' => 'date',
-            'is_demo' => 'boolean',
             'latitude' => 'float',
             'longitude' => 'float',
         ];

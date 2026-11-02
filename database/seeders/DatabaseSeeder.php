@@ -7,9 +7,10 @@ use Illuminate\Database\Seeder;
 /**
  * Default seeder.
  *
- * Reference data (examinations, help articles) is always safe. Demonstration centres
- * and listings are clearly flagged and refuse to load in production unless
- * ALLOW_DEMO_SEED=true is explicitly set.
+ * Seeds only production-safe reference data (examinations, help articles).
+ * Real centre and listing data is imported by an administrator through the
+ * verified CSV import. The first admin account is created with
+ * `php artisan app:create-admin`.
  */
 class DatabaseSeeder extends Seeder
 {
@@ -17,7 +18,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             ReferenceDataSeeder::class,
-            DemoDataSeeder::class,
         ]);
     }
 }

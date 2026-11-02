@@ -1,11 +1,11 @@
 # Go Live — Exam Travel Assist
 
 This runbook takes the app from this repository to a public URL. Pick **one** of the
-tracks below. Tracks A–C are real production; Track D is a temporary public demo.
+tracks below. Tracks A–C are real production; Track D is a temporary preview URL.
 
 > **Before any public exposure**, read [`SECURITY_AND_PRIVACY.md`](SECURITY_AND_PRIVACY.md)
 > and complete its pre-launch checklist. In particular: `APP_DEBUG=false`, a real
-> `APP_KEY`, HTTPS, and **no demo accounts with a known password**.
+> `APP_KEY`, HTTPS, and no accounts with a known or shared password.
 
 ---
 
@@ -52,10 +52,8 @@ sudo supervisorctl reread && sudo supervisorctl update
 curl -fsS https://your-domain.example/up && echo OK
 ```
 
-Then log in as the admin you created. If this database ever held demo data, remove
-it first — `php artisan data:purge-demo` prints exactly what it would delete and
-asks before doing it. Then import real, lawfully-obtained centre data via
-**Admin → CSV import**. The app ships with **no production data** by design.
+Then log in as the admin you created. The app ships with **no production data** by
+design — import real, lawfully-obtained centre data via **Admin → CSV import**.
 
 ---
 
@@ -87,18 +85,19 @@ repository is ready for it (no build step, standard Laravel layout, env-based co
 
 ---
 
-## Track D — Temporary public URL from this sandbox (demo only)
+## Track D — Temporary public URL from this sandbox (preview only)
 
 A Cloudflare quick tunnel can expose a local server with no account:
 
 ```bash
-bash deploy/preview.sh
+php artisan serve &
+cloudflared tunnel --no-autoupdate --url http://127.0.0.1:8000
 ```
 
-This prints a `https://….trycloudflare.com` URL. **It is not production:** it runs PHP's
+This prints a `https://….trycloudflare.com` URL. Create a throwaway admin with
+`php artisan app:create-admin` if you need to sign in. **It is not production:** it runs PHP's
 built-in server over SQLite, dies when the process/sandbox stops, and the URL is random and
-ephemeral. Use it only to *show* the app. If you use it, do **not** leave demo admin
-credentials active.
+ephemeral. Use it only to *show* the app.
 
 ---
 
@@ -106,8 +105,7 @@ credentials active.
 
 - [ ] `APP_ENV=production`, `APP_DEBUG=false`, `APP_URL=https://…`, fresh `APP_KEY`.
 - [ ] MySQL 8 configured; `php artisan migrate --force` succeeded.
-- [ ] `php artisan app:create-admin` run; **demo accounts removed**.
-- [ ] `php artisan data:purge-demo --dry-run` reports nothing left to delete.
+- [ ] `php artisan app:create-admin` run; no shared or demo accounts exist.
 - [ ] Only lawfully-obtained centre data imported, with source URLs recorded.
 - [ ] `MAIL_*` configured; decide `REQUIRE_EMAIL_VERIFICATION`.
 - [ ] HTTPS enforced (certbot / platform TLS); HSTS considered.

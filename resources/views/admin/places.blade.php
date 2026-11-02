@@ -99,7 +99,7 @@
             <tbody>
                 @forelse($places as $place)
                     <tr>
-                        <td>{{ $place->name }}@if($place->is_demo)<br><span class="badge b-demo">demo</span>@endif</td>
+                        <td>{{ $place->name }}</td>
                         <td class="small">{{ $categories[$place->category] ?? $place->category }}</td>
                         <td class="small">{{ $place->city }}</td>
                         <td class="small">{{ $place->centre?->name ?? '—' }}</td>

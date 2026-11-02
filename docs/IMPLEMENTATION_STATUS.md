@@ -25,7 +25,7 @@ services, at scale, or by a human on a device matrix.
 |---|---|---|---|
 | Public pages (home, centres, journey, places, community, assistant, help, legal, auth) | ✅ Complete & tested | `test_home_and_public_pages_load` | — |
 | Centre search: exam / session / state / city / code / keyword, pagination, empty state | ✅ Complete & tested | `CentreSearchService`, `test_centre_search_filters_and_empty_state`, `CentreSearchServiceTest` | Real official centre lists must be imported by an admin |
-| Centre detail: provenance, verification badge, "coordinates missing" honesty path | ✅ Complete & tested | `test_demo_data_is_labelled`, `test_centre_without_coordinates_says_so` | — |
+| Centre detail: provenance, verification badge, "coordinates missing" honesty path | ✅ Complete & tested | `test_centre_without_coordinates_says_so` | — |
 | Exam & session management | ✅ Complete & tested | `AdminController::exams/storeSession`, `test_admin_routes_require_admin_role` | — |
 | Centre CRUD + verify + archive + provenance fields + audit | ✅ Complete & tested | `test_admin_can_create_centre_then_it_appears_in_search` | — |
 | CSV import: validate → preview → approve, row errors, duplicates, template | ✅ Complete & tested | `test_csv_import_validates_then_imports_valid_rows_only`, `test_csv_import_rejects_missing_required_headers`, `CsvCentreDataImporterTest` | — |
@@ -61,7 +61,6 @@ services, at scale, or by a human on a device matrix.
 | Admin dashboard with real counts + integration health panel | ✅ Complete & tested | `test_admin_dashboard_reports_real_counts` | — |
 | Admin: users, FAQs, places, moderation queue, audits, stale data | ✅ Complete & tested | `test_admin_routes_require_admin_role` | — |
 | Scheduled maintenance: stale flagging, retention pruning, deletion processing | ✅ Complete & tested (commands) | `data:flag-stale`, `data:prune`, `accounts:process-deletions` in `routes/console.php` | Requires a cron entry in production |
-| Demo-data purge before launch | ✅ Complete & tested (command) | `data:purge-demo` (dry-run, confirmation, audit log, last-admin guard) | Run `php artisan data:purge-demo` on the production database |
 | Responsive design system (mobile → desktop, no build step) | ✅ Complete & tested | `public/css/app.css`, `docs/UI_GUIDELINES.md`, `test_home_and_public_pages_load` | Visual check on a real device matrix is still worthwhile |
 | Human-readable bilingual copy (en + hi) | ✅ Complete & tested | `lang/en/messages.php`, `lang/hi/messages.php` (276 keys, in parity), `test_locale_switch_changes_interface_language` | Legal pages (`/privacy`, `/terms`, `/community-rules`) stay in English pending legal review; Hindi should still be proofread by a native speaker |
 
@@ -80,14 +79,12 @@ services, at scale, or by a human on a device matrix.
 ## Data-honesty guarantees encoded in the code
 
 - Every centre and listing carries `verification_status`, `source_name`, `source_url`,
-  `last_verified_at` and `is_demo`. Nothing is shown as verified without evidence.
+  `last_verified_at`. Nothing is shown as verified without evidence.
 - Freshness has an explicit window (`CENTRE_FRESHNESS_MONTHS`, default 6); records past it
   are flagged `stale` and surfaced on **Admin → Stale data** and in the UI.
 - Transport prices are either `estimated` (with the calculation disclosed per option) or
   `unavailable` (flights). They are never presented as live fares.
 - The assistant answers only from retrieved context and reports its sources; if it cannot
   ground an answer it says so and sets a `limitation`.
-- Demonstration data is badged **DEMO DATA** and the demo seeder refuses to run in
-  production unless `ALLOW_DEMO_SEED=true`.
 
 See [`DATA_SOURCES_AND_VERIFICATION.md`](DATA_SOURCES_AND_VERIFICATION.md) for the full policy.

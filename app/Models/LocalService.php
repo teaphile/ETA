@@ -12,14 +12,13 @@ class LocalService extends Model
         'exam_centre_id', 'name', 'category', 'city', 'address', 'latitude', 'longitude',
         'phone', 'website', 'opening_hours', 'rating', 'reviews_count', 'price_from',
         'source', 'source_name', 'source_type', 'source_url', 'provider_reference',
-        'data_status', 'error_or_limitation', 'is_demo', 'last_verified_at',
+        'data_status', 'error_or_limitation', 'last_verified_at',
         'valid_from', 'valid_until', 'retrieved_at', 'status',
     ];
 
     protected function casts(): array
     {
         return [
-            'is_demo' => 'boolean',
             'last_verified_at' => 'datetime',
             'retrieved_at' => 'datetime',
             'valid_from' => 'date',
@@ -43,7 +42,7 @@ class LocalService extends Model
     /** Freshness is about the *source*, so unverified rows are never called fresh. */
     public function isStale(): bool
     {
-        if (! DataStatus::isVerified($this->data_status) && ! $this->is_demo) {
+        if (! DataStatus::isVerified($this->data_status)) {
             return true;
         }
 

@@ -41,10 +41,6 @@
         <p class="small muted">{{ __('messages.places.opening_hours') }}: {{ $place->openingHours }}</p>
     @endif
 
-    @if($place->isDemo)
-        <span class="badge b-demo">{{ __('messages.common.demo') }}</span>
-    @endif
-
     <p class="tiny muted mt-2">
         {{ __('messages.common.source') }}: {{ $place->sourceName }}
         @if($place->lastVerifiedAt) · {{ __('messages.common.last_verified') }} {{ \Illuminate\Support\Carbon::parse($place->lastVerifiedAt)->format('d M Y') }}@endif

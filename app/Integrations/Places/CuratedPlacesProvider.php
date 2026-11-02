@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\DB;
  * Administrator-curated local listings stored in `local_services`.
  *
  * Always available (no external key needed) and therefore the safe default. Each
- * listing carries its own provenance and last-verified timestamp, and demo rows stay
- * flagged so they can never be mistaken for real businesses.
+ * listing carries its own provenance and last-verified timestamp.
  */
 class CuratedPlacesProvider implements PlacesProvider
 {
@@ -113,7 +112,6 @@ class CuratedPlacesProvider implements PlacesProvider
         return [
             'total' => LocalService::where('status', 'active')->count(),
             'unverified' => LocalService::where('status', 'active')->where('data_status', DataStatus::Unverified->value)->count(),
-            'demo' => LocalService::where('status', 'active')->where('is_demo', true)->count(),
             'stale' => LocalService::where('status', 'active')
                 ->where(fn ($q) => $q->whereNull('last_verified_at')->orWhere('last_verified_at', '<', now()->subMonths(6)))
                 ->count(),

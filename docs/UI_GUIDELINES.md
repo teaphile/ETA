@@ -64,8 +64,7 @@ form controls share the same minimum height, so they always line up.
 
 Every piece of data carries a status badge, and the class always matches the
 `statusLabel()` / `DataStatus` value: `b-officially_verified`, `b-admin_verified`,
-`b-third_party`, `b-estimated`, `b-unverified`, `b-stale`, `b-unavailable`,
-`b-demo`. Never invent a colour that implies more certainty than the data has.
+`b-third_party`, `b-estimated`, `b-unverified`, `b-stale`, `b-unavailable`. Never invent a colour that implies more certainty than the data has.
 
 ## Responsive checkpoints
 

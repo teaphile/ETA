@@ -154,7 +154,6 @@ class AssistantContextBuilder
             'state' => $c->state,
             'examination' => $c->examination?->name,
             'verification_status' => $c->verification_status,
-            'is_demo' => (bool) $c->is_demo,
             'has_coordinates' => $c->latitude !== null && $c->longitude !== null,
         ])->all();
     }
@@ -183,7 +182,6 @@ class AssistantContextBuilder
             'city' => $s->city,
             'price_from' => $s->price_from !== null ? (int) $s->price_from : null,
             'data_status' => $s->data_status ?: DataStatus::Unverified->value,
-            'is_demo' => (bool) $s->is_demo,
         ])->all();
     }
 
